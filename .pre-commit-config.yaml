@@ -12,8 +12,9 @@ repos:
     -   id: clang-format
 -   repo: local
     hooks:
-      - id: clang-tidy
-        name: Run clang-tidy
-        entry: clang-tidy
+    -   id: clang-tidy
+        name: clang-tidy
+        entry: pio check
         language: system
         types: [c++]    # Includes .cpp and .h files
+        pass_filenames: false  # Don't pass file names to the entry point
