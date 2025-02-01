@@ -10,6 +10,7 @@ repos:
     rev: 'v19.1.7'
     hooks:
     -   id: clang-format
+        exclude: ^.vscode/
 -   repo: local
     hooks:
     -   id: clang-tidy
