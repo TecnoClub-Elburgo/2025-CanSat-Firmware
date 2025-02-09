@@ -103,7 +103,7 @@ void setup() {
   tft.setCursor(0, 0);
   tft.fillScreen(ST77XX_BLACK);
   tft.setTextColor(ST77XX_WHITE);
-  tft.setTextSize(1);
+  tft.setTextSize(1, 2);
 
   // initialize SX1278 with default settings
   Serial.print(F("[SX1278] Initializing ... "));
@@ -125,7 +125,7 @@ void setup() {
 
   // start transmitting the first packet
   Serial.print(F("[SX1278] Sending first packet ... "));
-  tft.print(F("[SX1278] Sending first packet ... "));
+  tft.print(F("[SX1278] Sending packet ... "));
 
   // you can transmit C-string or Arduino string up to
   // 255 characters long
@@ -162,7 +162,7 @@ void loop() {
     if (transmissionState == RADIOLIB_ERR_NONE) {
       // packet was successfully sent
       Serial.println(F("transmission finished!"));
-      tft.println(F("done!"));
+      tft.print(F("done!"));
 
       // NOTE: when using interrupt-driven transmit method,
       //       it is not possible to automatically measure
@@ -184,12 +184,23 @@ void loop() {
     delay(1000);
 
     // send another one
+    tft.setCursor(0, 120);
+    tft.setTextColor(ST77XX_BLACK);
+    tft.print(F("[SX1278] Sending packet # "));
+    tft.print(count);
+    tft.print(F(" ... done!"));
+    tft.setCursor(0, 120);
+    tft.setTextColor(ST77XX_WHITE);
+
     Serial.print(F("[SX1278] Sending another packet ... "));
-    tft.print(F("[SX1278] Sending packet ... "));
+    Serial.print(count++);
+    tft.print(F("[SX1278] Sending packet # "));
+    tft.print(count);
+    tft.print(F(" ... "));
 
     // you can transmit C-string or Arduino string up to
     // 255 characters long
-    String str = "Hello World! #" + String(count++);
+    String str = "Hello World! #" + String(count);
     transmissionState = radio.startTransmit(str);
 
     // you can also transmit byte array up to 255 bytes long
