@@ -102,12 +102,13 @@ void setup() {
 
   tft.setCursor(0, 0);
   tft.fillScreen(ST77XX_BLACK);
+  tft.setTextWrap(true);
   tft.setTextColor(ST77XX_WHITE);
   tft.setTextSize(1, 2);
 
   // initialize SX1278 with default settings
-  Serial.print(F("[SX1278] Initializing ... "));
-  tft.print(F("[SX1278] Initializing ... "));
+  Serial.print(F("[SX1278] Initialising ... "));
+  tft.print(F("[SX1278] Initialising ... "));
   int state = radio.begin();
   if (state == RADIOLIB_ERR_NONE) {
     Serial.println(F("success!"));
@@ -125,7 +126,7 @@ void setup() {
 
   // start transmitting the first packet
   Serial.print(F("[SX1278] Sending first packet ... "));
-  tft.print(F("[SX1278] Sending packet ... "));
+  tft.print(F("[SX1278] Sending first packet ... "));
 
   // you can transmit C-string or Arduino string up to
   // 255 characters long
@@ -185,12 +186,7 @@ void loop() {
 
     // send another one
     tft.setCursor(0, 120);
-    tft.setTextColor(ST77XX_BLACK);
-    tft.print(F("[SX1278] Sending packet # "));
-    tft.print(count);
-    tft.print(F(" ... done!"));
-    tft.setCursor(0, 120);
-    tft.setTextColor(ST77XX_WHITE);
+    tft.fillRect(0, 120, 240, 40, ST77XX_BLACK);
 
     Serial.print(F("[SX1278] Sending another packet ... "));
     Serial.print(count++);
