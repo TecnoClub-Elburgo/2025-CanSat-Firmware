@@ -1,10 +1,14 @@
-// #include <Arduino.h>
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7789.h> // Hardware-specific library for ST7789
+#include <Arduino.h>
 
 #include <RadioLib.h>
 
 #include <SPI.h>
+
+#include <BlueDot_BME280_TSL2591.h>
+
+#include <Wire.h>
 
 #define TFT_CS -1 // CS is grounded
 #define TFT_RST 9 // Or set to -1 and connect to Arduino RESET pin
@@ -22,6 +26,9 @@ Adafruit_ST7789 tft = Adafruit_ST7789(&SPI1, TFT_CS, TFT_DC, TFT_RST);
 // RESET pin: 41
 // DIO1 pin:  not in AI-Thinker breakout
 SX1278 radio = new Module(10, 2, 41, -1);
+
+BlueDot_BME280_TSL2591 bme280;
+BlueDot_BME280_TSL2591 tsl2591;
 
 // save transmission state between loops
 int transmissionState = RADIOLIB_ERR_NONE;
@@ -125,8 +132,8 @@ void setup() {
   radio.setPacketSentAction(setFlag);
 
   // start transmitting the first packet
-  Serial.print(F("[SX1278] Sending first packet ... "));
-  tft.print(F("[SX1278] Sending first packet ... "));
+  Serial.println(F("[SX1278] Sending first packet ... "));
+  tft.println(F("[SX1278] Sending first packet ... "));
 
   // you can transmit C-string or Arduino string up to
   // 255 characters long
@@ -138,6 +145,45 @@ void setup() {
                       0x89, 0xAB, 0xCD, 0xEF};
     transmissionState = radio.startTransmit(byteArr, 8);
   */
+
+  Serial.print(F("[BME280 + TSL2591] Initialising... "));
+  tft.print(F("[BMETSL] Initialising... "));
+
+  bme280.parameter.I2CAddress =
+      0x77; // The BME280 is hardwired to use the I2C Address 0x77
+  tsl2591.parameter.I2CAddress = 0x29;
+  Wire.begin();
+
+  // Set BME280 + TSL2591 up
+  tsl2591.parameter.gain = 0b01;
+  tsl2591.parameter.integration = 0b000;
+  tsl2591.config_TSL2591();
+
+  bme280.parameter.sensorMode = 0b11;
+  bme280.parameter.IIRfilter = 0b100;
+  bme280.parameter.humidOversampling = 0b101;
+  bme280.parameter.tempOversampling = 0b101;
+  bme280.parameter.pressOversampling = 0b101;
+  bme280.parameter.pressureSeaLevel = 1013.25;
+  bme280.parameter.tempOutsideCelsius = 15;
+
+  bool bmeFound = bme280.init_BME280() == 0x60;
+  bool tslFound = tsl2591.init_TSL2591() == 0x50;
+  if (!bmeFound) {
+    Serial.print(F("BME280 could not be found! "));
+    tft.print(F("BME not found! "));
+  }
+  if (!tslFound) {
+    Serial.print(F("TSL2591 could not be found!"));
+    tft.print(F("TSL not found!"));
+  }
+  if (bmeFound && tslFound) {
+    Serial.print(F("success!"));
+    tft.print(F("success!"));
+  }
+
+  Serial.println();
+  tft.println();
 
   tft.println();
   tft.println("Sketch has been");
@@ -152,13 +198,34 @@ void setup() {
 // counter to keep track of transmitted packets
 int count = 0;
 
+float temperature;
+float humidity;
+float pressure;
+float illuminance;
+String measurements;
+
 void loop() {
   // put your main code here, to run repeatedly:
+
+  temperature = bme280.readTempC();
+  humidity = bme280.readHumidity();
+  pressure = bme280.readPressure();
+  illuminance = tsl2591.readIlluminance_TSL2591();
+
+  measurements = "T: " + (String)temperature + " H: " + (String)humidity +
+                 " P: " + (String)pressure + " I: " + (String)illuminance;
+
+  tft.setCursor(0, 170);
+  tft.fillRect(0, 170, 240, 40, ST77XX_BLACK);
+  Serial.println("[BME280 + TSL2591] Measurements: " + measurements);
+  tft.print("[BMETSL] Measurements: " + measurements);
 
   // check if the previous transmission finished
   if (transmittedFlag) {
     // reset flag
     transmittedFlag = false;
+
+    tft.setCursor(0, 140);
 
     if (transmissionState == RADIOLIB_ERR_NONE) {
       // packet was successfully sent
@@ -196,7 +263,7 @@ void loop() {
 
     // you can transmit C-string or Arduino string up to
     // 255 characters long
-    String str = "Hello World! #" + String(count);
+    String str = "Hello World! #" + String(count) + measurements;
     transmissionState = radio.startTransmit(str);
 
     // you can also transmit byte array up to 255 bytes long
