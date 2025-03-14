@@ -154,9 +154,7 @@ void setup() {
   tsl2591.parameter.I2CAddress = 0x29;
   Wire.begin();
 
-// ------ WIP (Debugging purposes) ----------------------
-#if 0
-
+  // Set BME280 + TSL2591 up
   tsl2591.parameter.gain = 0b01;
   tsl2591.parameter.integration = 0b000;
   tsl2591.config_TSL2591();
@@ -168,12 +166,6 @@ void setup() {
   bme280.parameter.pressOversampling = 0b101;
   bme280.parameter.pressureSeaLevel = 1013.25;
   bme280.parameter.tempOutsideCelsius = 15;
-
-#endif
-
-  Serial.println("bme:" + (String)bme280.init_BME280());
-  Serial.println("tsl:" + (String)tsl2591.init_TSL2591());
-  // ------------------------------------------------------
 
   bool bmeFound = bme280.init_BME280() == 0x60;
   bool tslFound = tsl2591.init_TSL2591() == 0x50;
@@ -189,11 +181,6 @@ void setup() {
     Serial.print(F("success!"));
     tft.print(F("success!"));
   }
-
-  // ------ WIP (Debugging purposes) ----------------------
-  Serial.println(bme280.readTempC());
-  Serial.println(tsl2591.readIlluminance_TSL2591());
-  // ------------------------------------------------------
 
   Serial.println();
   tft.println();
@@ -211,13 +198,34 @@ void setup() {
 // counter to keep track of transmitted packets
 int count = 0;
 
+float temperature;
+float humidity;
+float pressure;
+float illuminance;
+String measurements;
+
 void loop() {
   // put your main code here, to run repeatedly:
+
+  temperature = bme280.readTempC();
+  humidity = bme280.readHumidity();
+  pressure = bme280.readPressure();
+  illuminance = tsl2591.readIlluminance_TSL2591();
+
+  measurements = "T: " + (String)temperature + " H: " + (String)humidity +
+                 " P: " + (String)pressure + " I: " + (String)illuminance;
+
+  tft.setCursor(0, 170);
+  tft.fillRect(0, 170, 240, 40, ST77XX_BLACK);
+  Serial.println("[BME280 + TSL2591] Measurements: " + measurements);
+  tft.print("[BMETSL] Measurements: " + measurements);
 
   // check if the previous transmission finished
   if (transmittedFlag) {
     // reset flag
     transmittedFlag = false;
+
+    tft.setCursor(0, 140);
 
     if (transmissionState == RADIOLIB_ERR_NONE) {
       // packet was successfully sent
@@ -255,7 +263,7 @@ void loop() {
 
     // you can transmit C-string or Arduino string up to
     // 255 characters long
-    String str = "Hello World! #" + String(count);
+    String str = "Hello World! #" + String(count) + measurements;
     transmissionState = radio.startTransmit(str);
 
     // you can also transmit byte array up to 255 bytes long
