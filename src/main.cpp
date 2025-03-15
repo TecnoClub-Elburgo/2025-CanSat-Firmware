@@ -2,7 +2,7 @@
 #include <Adafruit_ST7789.h> // Hardware-specific library for ST7789
 #include <Arduino.h>
 
-#include <RadioLib.h>
+#include "Tecnoclub_SX1278.h"
 
 #include <SPI.h>
 
@@ -20,21 +20,8 @@
 // For 1.14", 1.3", 1.54", 1.69", and 2.0" TFT with ST7789:
 Adafruit_ST7789 tft = Adafruit_ST7789(&SPI1, TFT_CS, TFT_DC, TFT_RST);
 
-// SX1278 has the following connections:
-// NSS pin:   10
-// DIO0 pin:  2
-// RESET pin: 41
-// DIO1 pin:  not in AI-Thinker breakout
-SX1278 radio = new Module(10, 2, 41, -1);
-
 BlueDot_BME280_TSL2591 bme280;
 BlueDot_BME280_TSL2591 tsl2591;
-
-// save transmission state between loops
-int transmissionState = RADIOLIB_ERR_NONE;
-
-// flag to indicate that a packet was sent
-volatile bool transmittedFlag = false;
 
 float p = 3.1415926;
 
@@ -51,9 +38,6 @@ void testdrawcircles(uint8_t, uint16_t);
 void testtriangles();
 void testroundrects();
 void tftPrintTest();
-
-// LoRa radio functions:
-void setFlag(void);
 
 void setup() {
   // put your setup code here, to run once:
@@ -114,22 +98,7 @@ void setup() {
   tft.setTextSize(1, 2);
 
   // initialize SX1278 with default settings
-  Serial.print(F("[SX1278] Initialising ... "));
-  tft.print(F("[SX1278] Initialising ... "));
-  int state = radio.begin();
-  if (state == RADIOLIB_ERR_NONE) {
-    Serial.println(F("success!"));
-    tft.println(F("success!"));
-  } else {
-    Serial.print(F("failed, code "));
-    tft.print(F("failed, code "));
-    Serial.println(state);
-    tft.println(state);
-  }
-
-  // set the function that will be called
-  // when packet transmission is finished
-  radio.setPacketSentAction(setFlag);
+  Radio::init();
 
   // start transmitting the first packet
   Serial.println(F("[SX1278] Sending first packet ... "));
@@ -137,7 +106,7 @@ void setup() {
 
   // you can transmit C-string or Arduino string up to
   // 255 characters long
-  transmissionState = radio.startTransmit("Hello World!");
+  Radio::startTransmit("Hello World!");
 
   // you can also transmit byte array up to 255 bytes long
   /*
@@ -221,32 +190,7 @@ void loop() {
   tft.print("[BMETSL] Measurements: " + measurements);
 
   // check if the previous transmission finished
-  if (transmittedFlag) {
-    // reset flag
-    transmittedFlag = false;
-
-    tft.setCursor(0, 140);
-
-    if (transmissionState == RADIOLIB_ERR_NONE) {
-      // packet was successfully sent
-      Serial.println(F("transmission finished!"));
-      tft.print(F("done!"));
-
-      // NOTE: when using interrupt-driven transmit method,
-      //       it is not possible to automatically measure
-      //       transmission data rate using getDataRate()
-
-    } else {
-      Serial.print(F("failed, code "));
-      tft.print(F("failed, code "));
-      Serial.println(transmissionState);
-      tft.println(transmissionState);
-    }
-
-    // clean up after transmission is finished
-    // this will ensure transmitter is disabled,
-    // RF switch is powered down etc.
-    radio.finishTransmit();
+  if (Radio::checkTransmitFinish()) {
 
     // wait a second before transmitting again
     delay(1000);
@@ -264,7 +208,7 @@ void loop() {
     // you can transmit C-string or Arduino string up to
     // 255 characters long
     String str = "Hello World! #" + String(count) + measurements;
-    transmissionState = radio.startTransmit(str);
+    Radio::startTransmit(str);
 
     // you can also transmit byte array up to 255 bytes long
     /*
@@ -448,16 +392,4 @@ void tftPrintTest() {
   tft.print(millis() / 1000);
   tft.setTextColor(ST77XX_WHITE);
   tft.print(" seconds.");
-}
-
-// LoRa radio functions:
-
-// this function is called when a complete packet
-// is transmitted by the module
-// IMPORTANT: this function MUST be 'void' type
-//            and MUST NOT have any arguments!
-// Read into ISRs for more information
-void setFlag(void) {
-  // we sent a packet, set the flag
-  transmittedFlag = true;
 }
