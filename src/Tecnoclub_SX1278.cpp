@@ -1,4 +1,5 @@
 #include "Tecnoclub_SX1278.h"
+#include "Tecnoclub_ST7789.h"
 
 // Anything defined in a nameless namespace is private for the file
 namespace {
@@ -33,16 +34,16 @@ namespace Radio {
 void init() {
   // initialize SX1278 with default settings
   Serial.print(F("[SX1278] Initialising ... "));
-  // tft.print(F("[SX1278] Initialising ... "));
+  Display::tft.print(F("[SX1278] Initialising ... "));
   int state = radio.begin();
   if (state == RADIOLIB_ERR_NONE) {
     Serial.println(F("success!"));
-    //  tft.println(F("success!"));
+    Display::tft.println(F("success!"));
   } else {
     Serial.print(F("failed, code "));
-    //  tft.print(F("failed, code "));
+    Display::tft.print(F("failed, code "));
     Serial.println(state);
-    //  tft.println(state);
+    Display::tft.println(state);
   }
 
   // set the function that will be called
@@ -75,12 +76,12 @@ bool checkTransmitFinish() {
   transmittedFlag = false;
   available = true;
 
-  //      tft.setCursor(0, 140);
+  Display::tft.setCursor(0, 140);
 
   if (transmissionState == RADIOLIB_ERR_NONE) {
     // packet was successfully sent
     Serial.println(F("transmission finished!"));
-    //        tft.print(F("done!"));
+    Display::tft.print(F("done!"));
 
     // NOTE: when using interrupt-driven transmit method,
     //       it is not possible to automatically measure
@@ -88,9 +89,9 @@ bool checkTransmitFinish() {
 
   } else {
     Serial.print(F("failed, code "));
-    //        tft.print(F("failed, code "));
+    Display::tft.print(F("failed, code "));
     Serial.println(transmissionState);
-    //        tft.println(transmissionState);
+    Display::tft.println(transmissionState);
   }
 
   // clean up after transmission is finished

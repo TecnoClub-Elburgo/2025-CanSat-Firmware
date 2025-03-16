@@ -188,6 +188,7 @@ void tftPrintTest() {
 namespace Display {
 // For 1.14", 1.3", 1.54", 1.69", and 2.0" TFT with ST7789:
 Adafruit_ST7789 tft = Adafruit_ST7789(&SPI1, ST7789_CS, ST7789_DC, ST7789_RST);
+
 void init(uint16_t width, uint16_t height, uint8_t spiMode, bool test) {
   Serial.print(F("[ST7789] Hello! Initialising..."));
 
@@ -214,20 +215,6 @@ void init(uint16_t width, uint16_t height, uint8_t spiMode, bool test) {
   tft.setTextColor(ST77XX_WHITE);
   tft.setTextSize(1, 2);
 }
-
-size_t print(double n, int digits) { return tft.print(n, digits); }
-
-size_t print(const __FlashStringHelper *f) { return tft.print(f); }
-
-size_t print(const Printable &obj) { return tft.print(obj); }
-
-size_t println(double n, int digits) { return tft.println(n, digits); }
-
-size_t println(const __FlashStringHelper *f) { return tft.println(f); }
-
-size_t println(const Printable &obj) { return tft.println(obj); }
-
-size_t println() { return tft.println(); }
 
 void test() {
   Serial.print(F("[ST7789] Testing..."));

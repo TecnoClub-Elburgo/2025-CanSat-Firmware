@@ -1,5 +1,3 @@
-// These two statements are part of a "header guard" pattern.
-// It prevents duplicate declarations.
 #ifndef TECNOCLUB_SX1278_H
 #define TECNOCLUB_SX1278_H
 
