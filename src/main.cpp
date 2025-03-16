@@ -1,16 +1,11 @@
 #include <Arduino.h>
 
+#include "Tecnoclub_BME280_TSL2591.h"
 #include "Tecnoclub_ST7789.h"
 #include "Tecnoclub_SX1278.h"
 
-#include <BlueDot_BME280_TSL2591.h>
-
-#include <Wire.h>
-
-BlueDot_BME280_TSL2591 bme280;
-BlueDot_BME280_TSL2591 tsl2591;
-
 // put function declarations here:
+int myFunction(int x, int y);
 
 void setup() {
   // put your setup code here, to run once:
@@ -40,41 +35,7 @@ void setup() {
   Serial.print(F("[BME280 + TSL2591] Initialising... "));
   Display::tft.print(F("[BMETSL] Initialising... "));
 
-  bme280.parameter.I2CAddress =
-      0x77; // The BME280 is hardwired to use the I2C Address 0x77
-  tsl2591.parameter.I2CAddress = 0x29;
-  Wire.begin();
-
-  // Set BME280 + TSL2591 up
-  tsl2591.parameter.gain = 0b01;
-  tsl2591.parameter.integration = 0b000;
-  tsl2591.config_TSL2591();
-
-  bme280.parameter.sensorMode = 0b11;
-  bme280.parameter.IIRfilter = 0b100;
-  bme280.parameter.humidOversampling = 0b101;
-  bme280.parameter.tempOversampling = 0b101;
-  bme280.parameter.pressOversampling = 0b101;
-  bme280.parameter.pressureSeaLevel = 1013.25;
-  bme280.parameter.tempOutsideCelsius = 15;
-
-  bool bmeFound = bme280.init_BME280() == 0x60;
-  bool tslFound = tsl2591.init_TSL2591() == 0x50;
-  if (!bmeFound) {
-    Serial.print(F("BME280 could not be found! "));
-    Display::tft.print(F("BME not found! "));
-  }
-  if (!tslFound) {
-    Serial.print(F("TSL2591 could not be found!"));
-    Display::tft.print(F("TSL not found!"));
-  }
-  if (bmeFound && tslFound) {
-    Serial.print(F("success!"));
-    Display::tft.print(F("success!"));
-  }
-
-  Serial.println();
-  Display::tft.println();
+  WeatherStation::init();
 
   Display::tft.println();
   Display::tft.print("Setup took ");
@@ -87,21 +48,11 @@ void setup() {
 // counter to keep track of transmitted packets
 int count = 0;
 
-float temperature;
-float humidity;
-float pressure;
-float illuminance;
 String measurements;
 void loop() {
   // put your main code here, to run repeatedly:
 
-  temperature = bme280.readTempC();
-  humidity = bme280.readHumidity();
-  pressure = bme280.readPressure();
-  illuminance = tsl2591.readIlluminance_TSL2591();
-
-  measurements = "T: " + (String)temperature + " H: " + (String)humidity +
-                 " P: " + (String)pressure + " I: " + (String)illuminance;
+  measurements = WeatherStation::getMeasurements();
 
   Display::tft.setCursor(0, 170);
   Display::tft.fillRect(0, 170, 240, 40, ST77XX_BLACK);
