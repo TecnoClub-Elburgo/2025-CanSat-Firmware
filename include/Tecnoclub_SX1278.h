@@ -1,7 +1,7 @@
 #ifndef TECNOCLUB_SX1278_H
 #define TECNOCLUB_SX1278_H
 
-#include "Tecnoclub_pins.h"
+#include "TecnoClub_pins.h"
 #include <Arduino.h>
 #include <RadioLib.h>
 

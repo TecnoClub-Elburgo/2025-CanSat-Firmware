@@ -1,5 +1,5 @@
-#include "Tecnoclub_SX1278.h"
-#include "Tecnoclub_ST7789.h"
+#include "TecnoClub_SX1278.h"
+#include "TecnoClub_ST7789.h"
 
 // Anything defined in a nameless namespace is private for the file
 namespace {

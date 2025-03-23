@@ -1,6 +1,4 @@
-#include "Tecnoclub_ST7789.h"
-
-#include <utility>
+#include "TecnoClub_ST7789.h"
 
 namespace {
 // OPTION 1 (recommended) is to use the HARDWARE SPI pins, which are unique

@@ -1,5 +1,5 @@
-#include "Tecnoclub_BME280_TSL2591.h"
-#include "Tecnoclub_ST7789.h"
+#include "TecnoClub_BME280_TSL2591.h"
+#include "TecnoClub_ST7789.h"
 
 namespace {
 BlueDot_BME280_TSL2591 bme280;
