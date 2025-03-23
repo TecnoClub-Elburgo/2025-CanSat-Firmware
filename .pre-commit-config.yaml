@@ -18,6 +18,13 @@ repos:
         exclude: ^.vscode/
 -   repo: local
     hooks:
+    -   id: REUSE
+        name: REUSE
+        entry: reuse lint
+        language: python
+        pass_filenames: false
+        additional_dependencies:
+        - reuse
     -   id: clang-tidy
         name: clang-tidy
         entry: pio check
