@@ -1,3 +1,10 @@
+/*
+ * SPDX-FileCopyrightText: 2025 TecnoClub Elburgo <tecnoinfoelburgo@gmail.com>
+ * SPDX-FileContributor: EGJ-Moorington <egjmoorington@gmail.com>
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 #ifndef TECNOCLUB_ST7789_H
 #define TECNOCLUB_ST7789_H
 

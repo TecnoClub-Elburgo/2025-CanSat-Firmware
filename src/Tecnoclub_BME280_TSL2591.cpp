@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2025 TecnoClub Elburgo <tecnoinfoelburgo@gmail.com>
+// SPDX-FileContributor: EGJ-Moorington <egjmoorington@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 #include "TecnoClub_BME280_TSL2591.h"
 #include "TecnoClub_ST7789.h"
 
