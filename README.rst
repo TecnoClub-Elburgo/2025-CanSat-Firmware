@@ -1,3 +1,8 @@
+.. SPDX-FileCopyrightText: 2025 TecnoClub Elburgo <tecnoinfoelburgo@gmail.com>
+.. SPDX-FileContributor: EGJ-Moorington <egjmoorington@gmail.com>
+..
+.. SPDX-License-Identifier: MIT
+
 Introduction
 ============
 
@@ -16,6 +21,110 @@ Introduction
 This is the firmware used in TecnoClub Elburgo's CanSat during `CanSat <https://www.esa.int/Education/CanSat/What_is_a_CanSat>`_
 2024-2025.
 
+Wiring
+======
+Hardware components used in this project:
+
+* Teensy® 4.1 Development Board
+* Ai-Thinker SX1278 LoRa Ra-01 433MHz v4.0 breakout
+* BlueDot BME280 + TSL2591 Advanced Weather Station
+* ST7789 GMT130-V1.0 IPS 240*240
+
+Pinout:
+-------
+
++--------+------------------+--------+------------+
+| SX1278 | BME280 + TSL2591 | ST7789 | Teensy 4.1 |
++========+==================+========+============+
+| 3V3    | VCC              | VCC    | 3V         |
++--------+------------------+--------+------------+
+| GND    | GND              | GND    | G          |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 0      |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 1      |
++--------+------------------+--------+------------+
+| IO0    |                  |        | Pin 2      |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 3      |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 4      |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 5      |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 6      |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 7      |
++--------+------------------+--------+------------+
+|        |                  | DC     | Pin 8      |
++--------+------------------+--------+------------+
+|        |                  | RES    | Pin 9      |
++--------+------------------+--------+------------+
+| NSS    |                  |        | Pin 10     |
++--------+------------------+--------+------------+
+| MOSI   |                  |        | Pin 11     |
++--------+------------------+--------+------------+
+| MISO   |                  |        | Pin 12     |
++--------+------------------+--------+------------+
+| SCK    |                  |        | Pin 13     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 14     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 15     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 16     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 17     |
++--------+------------------+--------+------------+
+|        | SDA              |        | Pin 18     |
++--------+------------------+--------+------------+
+|        | SCL              |        | Pin 19     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 20     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 21     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 22     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 23     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 24     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 25     |
++--------+------------------+--------+------------+
+|        |                  | SDA    | Pin 26     |
++--------+------------------+--------+------------+
+|        |                  | SCK    | Pin 27     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 28     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 29     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 30     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 31     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 32     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 33     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 34     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 35     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 36     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 37     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 38     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 39     |
++--------+------------------+--------+------------+
+|        |                  |        | Pin 40     |
++--------+------------------+--------+------------+
+| RST    |                  |        | Pin 41     |
++--------+------------------+--------+------------+
+
 Downloading compiled ``.hex`` files
 ===================================
 
@@ -27,7 +136,7 @@ of this repository. These files are ready for use and do not require additional 
 The latest release can be found in `the Releases tab <https://github.com/TecnoclubCansat/2025-CanSat-Firmware/releases>`_.
 
 ``.hex`` files can be uploaded to a Teensy 4.1 board using the `Teensy Loader Application <https://www.pjrc.com/teensy/loader.html>`_.
-  
+
 Dependencies
 ============
 The firmware depends on:
@@ -64,7 +173,7 @@ To get started with this project, you can either clone the repository or downloa
    * This will create a local copy of the repository, which is prefered for contributing.
 
 2. **Download as a .zip File**:
-   
+
    * Navigate to the **Code** button at the top of the repository's GitHub page.
    * Select **Download ZIP** to download the project files.
    * Extract the downloaded ``.zip`` file to your desired location.
@@ -94,12 +203,12 @@ The following steps explain how to install ``pre-commit`` in a Python virtual en
    You can check your version of `Python  <https://www.python.org/downloads/>`_
    with the following command:
 
-   .. code-block:: shell 
+   .. code-block:: shell
 
        python --version
 
 2. **Create a Python virtual environment.**
-   
+
    To make a virtual environment of name ``.venv`` in the current directory, run:
 
    .. code-block:: shell
