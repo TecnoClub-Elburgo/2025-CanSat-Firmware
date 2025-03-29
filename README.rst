@@ -3,6 +3,10 @@
 ..
 .. SPDX-License-Identifier: MIT
 
+.. image:: https://raw.githubusercontent.com/TecnoClub-Elburgo/TecnoClub-Elburgo-Assets/main/Assets/CanSat/TecnoClub_CanSat_banner.png
+    :target: https://github.com/TecnoClub-Elburgo
+    :alt: TecnoClub Elburgo CanSat banner
+
 Introduction
 ============
 
