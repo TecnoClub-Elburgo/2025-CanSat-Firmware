@@ -1,5 +1,10 @@
-#include "Tecnoclub_SX1278.h"
-#include "Tecnoclub_ST7789.h"
+// SPDX-FileCopyrightText: 2025 TecnoClub Elburgo <tecnoinfoelburgo@gmail.com>
+// SPDX-FileContributor: 2025 EGJ-Moorington <egjmoorington@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+#include "TecnoClub_SX1278.h"
+#include "TecnoClub_ST7789.h"
 
 // Anything defined in a nameless namespace is private for the file
 namespace {

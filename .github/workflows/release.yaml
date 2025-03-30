@@ -1,0 +1,43 @@
+# SPDX-FileCopyrightText: 2025 TecnoClub Elburgo <tecnoinfoelburgo@gmail.com>
+# SPDX-FileContributor: 2025 EGJ-Moorington <egjmoorington@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+name: GitHub Release Actions
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  upload-release-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set Python up
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install PlatformIO
+        run: pip install platformio
+
+      - name: Build project
+        run: pio run
+
+      - name: Collect .hex file
+        run: |
+          mkdir -p output
+          cp .pio/build/teensy41/firmware.hex output/
+
+      - name: Upload release assets
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: output/firmware.hex
+          asset_name: firmware.hex
+          asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

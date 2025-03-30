@@ -1,6 +1,9 @@
-#include "Tecnoclub_ST7789.h"
+// SPDX-FileCopyrightText: 2025 TecnoClub Elburgo <tecnoinfoelburgo@gmail.com>
+// SPDX-FileContributor: 2025 EGJ-Moorington <egjmoorington@gmail.com>
+//
+// SPDX-License-Identifier: MIT
 
-#include <utility>
+#include "TecnoClub_ST7789.h"
 
 namespace {
 // OPTION 1 (recommended) is to use the HARDWARE SPI pins, which are unique

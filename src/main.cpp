@@ -1,8 +1,13 @@
+// SPDX-FileCopyrightText: 2025 TecnoClub Elburgo <tecnoinfoelburgo@gmail.com>
+// SPDX-FileContributor: 2025 EGJ-Moorington <egjmoorington@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 #include <Arduino.h>
 
-#include "Tecnoclub_BME280_TSL2591.h"
-#include "Tecnoclub_ST7789.h"
-#include "Tecnoclub_SX1278.h"
+#include "TecnoClub_BME280_TSL2591.h"
+#include "TecnoClub_ST7789.h"
+#include "TecnoClub_SX1278.h"
 
 // put function declarations here:
 int myFunction(int x, int y);
