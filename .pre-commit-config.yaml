@@ -1,0 +1,33 @@
+# SPDX-FileCopyrightText: 2025 TecnoClub Elburgo <tecnoinfoelburgo@gmail.com>
+# SPDX-FileContributor: 2025 EGJ-Moorington <egjmoorington@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+-   repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: 'v20.1.0'
+    hooks:
+    -   id: clang-format
+        exclude: ^.vscode/
+-   repo: local
+    hooks:
+    -   id: REUSE
+        name: REUSE
+        entry: reuse lint
+        language: python
+        pass_filenames: false
+        additional_dependencies:
+        - reuse
+    -   id: clang-tidy
+        name: clang-tidy
+        entry: pio check
+        language: system
+        types: [c++]    # Includes .cpp and .h files
+        pass_filenames: false  # Don't pass file names to the entry point
