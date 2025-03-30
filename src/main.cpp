@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2025 TecnoClub Elburgo <tecnoinfoelburgo@gmail.com>
-// SPDX-FileContributor: EGJ-Moorington <egjmoorington@gmail.com>
+// SPDX-FileContributor: 2025 EGJ-Moorington <egjmoorington@gmail.com>
 //
 // SPDX-License-Identifier: MIT
 
