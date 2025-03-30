@@ -132,9 +132,6 @@ Pinout:
 Downloading compiled ``.hex`` files
 ===================================
 
-| :information_source: **Note**:
-Pre-compiled ``.hex`` files are not available yet. Thank you for your patience.
-
 You can find the pre-compiled ``.hex`` firmware files for Teensy 4.1 in `the Releases tab <https://github.com/TecnoclubCansat/2025-CanSat-Firmware/releases>`_
 of this repository. These files are ready for use and do not require additional compilation.
 The latest release can be found in `the Releases tab <https://github.com/TecnoclubCansat/2025-CanSat-Firmware/releases>`_.

@@ -5,9 +5,9 @@
 
 #include <Arduino.h>
 
-#include "Tecnoclub_BME280_TSL2591.h"
-#include "Tecnoclub_ST7789.h"
-#include "Tecnoclub_SX1278.h"
+#include "TecnoClub_BME280_TSL2591.h"
+#include "TecnoClub_ST7789.h"
+#include "TecnoClub_SX1278.h"
 
 // put function declarations here:
 int myFunction(int x, int y);
