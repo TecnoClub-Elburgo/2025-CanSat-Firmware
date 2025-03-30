@@ -18,7 +18,7 @@ Introduction
     :target: https://github.com/TecnoclubCansat/2025-CanSat-Firmware/releases
     :alt: GitHub Releases
 
-.. image:: https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/TecnoclubCansat/2025-CanSat-Firmware/dev/.pre-commit-config.yaml&query=$..[?(@.repo=="https://github.com/pre-commit/mirrors-clang-format")].rev&prefix=v&logo=llvm&label=clang-format&color=blue
+.. image:: https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/TecnoClub-Elburgo/2025-CanSat-Firmware/dev/.pre-commit-config.yaml&query=$..[?(@.repo=="https://github.com/pre-commit/mirrors-clang-format")].rev&prefix=v&logo=llvm&label=clang-format&color=blue
     :target: https://clang.llvm.org/docs/ClangFormat.html
     :alt: Code Style: ClangFormat
 
