@@ -10,15 +10,15 @@
 Introduction
 ============
 
-.. image:: https://github.com/TecnoclubCansat/2025-CanSat-Firmware/workflows/Build%20CI/badge.svg
+.. image:: https://github.com/TecnoClub-Elburgo/2025-CanSat-Firmware/workflows/Build%20CI/badge.svg
     :target: https://github.com/TecnoclubCansat/2025-CanSat-Firmware/actions
     :alt: Build Status
 
-.. image:: https://img.shields.io/github/release/TecnoclubCansat/2025-CanSat-Firmware.svg
+.. image:: https://img.shields.io/github/release/TecnoClub-Elburgo/2025-CanSat-Firmware.svg
     :target: https://github.com/TecnoclubCansat/2025-CanSat-Firmware/releases
     :alt: GitHub Releases
 
-.. image:: https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/TecnoclubCansat/2025-CanSat-Firmware/dev/.pre-commit-config.yaml&query=$..[?(@.repo=="https://github.com/pre-commit/mirrors-clang-format")].rev&prefix=v&logo=llvm&label=clang-format&color=blue
+.. image:: https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/TecnoClub-Elburgo/2025-CanSat-Firmware/dev/.pre-commit-config.yaml&query=$..[1].rev&logo=llvm&label=clang-format&color=blue
     :target: https://clang.llvm.org/docs/ClangFormat.html
     :alt: Code Style: ClangFormat
 

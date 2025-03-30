@@ -11,6 +11,8 @@ repos:
     -   id: end-of-file-fixer
     -   id: check-yaml
     -   id: check-added-large-files
+# Avoid adding hooks before clang-format, as the clang-format badge in README.rst
+# will have to be updated to work
 -   repo: https://github.com/pre-commit/mirrors-clang-format
     rev: 'v20.1.0'
     hooks:
