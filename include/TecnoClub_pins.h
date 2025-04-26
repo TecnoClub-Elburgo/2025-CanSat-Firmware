@@ -19,4 +19,7 @@
 #define ST7789_RST 9 // Or set to -1 and connect to Arduino RESET pin
 #define ST7789_DC 8
 
+#define ESP32_RX 15
+#define ESP32_TX 14
+
 #endif

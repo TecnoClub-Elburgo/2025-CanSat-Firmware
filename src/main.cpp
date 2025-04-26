@@ -6,6 +6,7 @@
 #include <Arduino.h>
 
 #include "TecnoClub_BME280_TSL2591.h"
+#include "TecnoClub_Nano_ESP32.h"
 #include "TecnoClub_ST7789.h"
 #include "TecnoClub_SX1278.h"
 
@@ -16,6 +17,8 @@ void setup() {
   // put your setup code here, to run once:
 
   Serial.begin(9600);
+
+  Camera::init();
 
   Display::init(); // Init ST7789 240x240
 
@@ -56,6 +59,8 @@ int count = 0;
 String measurements;
 void loop() {
   // put your main code here, to run repeatedly:
+
+  Camera::read();
 
   measurements = WeatherStation::getMeasurements();
 
